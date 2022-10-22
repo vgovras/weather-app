@@ -122,4 +122,4 @@ dist
 debug/
 test/e2e/pg
 test/e2e/redis
-docket/.env
+docker/.env
