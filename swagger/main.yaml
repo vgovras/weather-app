@@ -9,8 +9,6 @@ info:
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
-servers:
-  - url: http://localhost:3000
 paths:
   /admin/country/create:
     post:
@@ -37,7 +35,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Country'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  result:
+                    $ref: '#/components/schemas/Country'
         '400':
           description: Invalid ID supplied
         '404':
@@ -57,9 +60,14 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Country'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Country'
         '400':
           description: Invalid ID supplied
         '404':
@@ -103,7 +111,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/City'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  result:
+                    $ref: '#/components/schemas/City'
         '400':
           description: Invalid ID supplied
         '404':
@@ -123,9 +136,14 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/City'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/City'
         '400':
           description: Invalid ID supplied
         '404':
