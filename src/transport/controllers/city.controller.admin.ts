@@ -1,16 +1,14 @@
-import { Request, Response } from 'express';
-import { CityService } from '../../services/city.service';
+import { Request, Response, Router } from 'express';
+import { services } from '../../services';
 
-export class AdminCityController {
-    constructor(private readonly cityService: CityService) {}
+export const adminCityRouter = Router();
 
-    async createCity(req: Request, res: Response) {
-        const result = await this.cityService.create(req.body);
-        return res.json(result);
-    }
+adminCityRouter.post('/create', async (req: Request, res: Response) => {
+    const result = await services.city.create(req.body);
+    return res.json(result);
+});
 
-    async getCities(req: Request, res: Response) {
-        const result = await this.cityService.list(req.body);
-        return res.json(result);
-    }
-}
+adminCityRouter.get('/list', async (req: Request, res: Response) => {
+    const result = await services.city.list(req.body);
+    return res.json(result);
+});

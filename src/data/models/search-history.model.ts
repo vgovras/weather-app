@@ -13,6 +13,6 @@ export class SearchHistoryModel extends BaseModel<SearchHistoryItem> {
     async getByPeriod(params: GetHistoryByPeriodParams) {
         return this.db<DbRecord<SearchHistoryItem>>(this.table)
             .select()
-            .whereBetween('date', [params.from, params.to]);
+            .whereBetween('day', [params.from, params.to]);
     }
 }

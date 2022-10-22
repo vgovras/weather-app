@@ -12,7 +12,7 @@ export class WeatherService extends BaseService<WeatherModel> {
         super(model);
     }
 
-    async syncWeather(payload: SyncWeatherActionPayload) {
+    async sync(payload: SyncWeatherActionPayload) {
         const action = new SyncWeatherAction(payload, this.dataSource);
 
         return action.execute();

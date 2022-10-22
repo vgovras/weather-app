@@ -35,7 +35,7 @@ export class DataSource implements CoreDataSource {
     }
 
     async saveWeather(weathers: Weather[]): Promise<DbRecord<Weather>[]> {
-        return this.models.weather.createManyIfNotExists({ conflictColumns: ['date'], values: weathers });
+        return this.models.weather.createManyIfNotExists({ conflictColumns: ['date', 'cityId'], values: weathers });
     }
 
     async getCities(cityIds: RecordId[]): Promise<DbRecord<City>[]> {

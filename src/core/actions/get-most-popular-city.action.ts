@@ -27,8 +27,14 @@ export class GetMostPopularCityAction {
 
         const [cityId, count] = Array
             .from(calculatedHistory)
-            .sort((a, b) => a[1] - b[1]);
+            .sort((a, b) => b[1] - a[1])[0];
 
-        return { cityId, count };
+        if (!cityId) {
+            return null;
+        }
+
+        const [city] = await this.dataSource.getCities([cityId]);
+
+        return { ...city, count };
     }
 }
