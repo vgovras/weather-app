@@ -15,6 +15,7 @@ export interface City {
     countryId: RecordId;
     latitude: number;
     longitude: number;
+    isActive: boolean;
 }
 
 export interface Weather {

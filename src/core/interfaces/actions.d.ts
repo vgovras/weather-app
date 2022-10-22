@@ -1,20 +1,25 @@
-import { RecordId } from '../../data/interfaces/entities';
+import { RecordId, City } from '../../data/interfaces/entities';
+import { QueryOptions } from '../../data/interfaces/query';
 
-export interface GetWeatherCoreActionPayload {
+export interface GetCityWeatherCoreActionPayload {
     cityId: RecordId;
-    date: Diapason;
+    from: Date;
+    to: Date;
 }
 
-export interface GetAverageTemperatureActionPayload {
+export interface GetAverageCityTemperatureActionPayload {
     cityId: RecordId;
-    date: Diapason;
+    from: Date;
+    to: Date;
 }
 
-export interface GetCitiesActionPayload {
-    skip?: number;
-    limit?: number;
-}
+export type GetAwaitableCitiesActionPayload = QueryOptions<City>;
 
 export interface SyncWeatherActionPayload {
     cityId: number;
+}
+
+export interface GetMostPopularCityActionPayload {
+    from: Date;
+    to: Date;
 }

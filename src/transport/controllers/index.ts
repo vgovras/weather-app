@@ -1,29 +1,16 @@
 import { Router } from 'express';
 
-import { DataSource } from '../../data/data-source';
-import { configureModels } from '../../data/models';
-import { CityService } from '../../services/city.service';
-import { CountryService } from '../../services/country.service';
-import { WeatherService } from '../../services/weather.service';
-
 import { AdminCityController } from './city.controller.admin';
 import { AdminCountryController } from './country.controller.admin';
 import { AdminWeatherController } from './weather.controller.admin';
 
-import { db } from '../../lib/db';
-import { logger } from '../../lib/logger';
+import { services } from '../../services';
 
 const router = Router();
-const models = configureModels(db, logger);
-const dataSource = new DataSource(models);
 
-const cityService = new CityService(models.city);
-const countryService = new CountryService(models.country);
-const weatherService = new WeatherService(models.weather, dataSource);
-
-const adminCityController = new AdminCityController(cityService);
-const adminCountryController = new AdminCountryController(countryService);
-const adminWeatherController = new AdminWeatherController(weatherService);
+const adminCityController = new AdminCityController(services.city);
+const adminCountryController = new AdminCountryController(services.country);
+const adminWeatherController = new AdminWeatherController(services.weather);
 
 // router.get('/cities', adminCityController.getCities);
 // router.get('/cities/:id/weather', adminCityController.createCity);

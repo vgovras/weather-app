@@ -1,4 +1,5 @@
-import { City, Weather, DbRecord } from '../../data/interfaces/entities';
+import { City, Weather, DbRecord, SearchHistoryItem } from '../../data/interfaces/entities';
+import { QueryOptions } from '../../data/interfaces/query';
 
 export type Diapason = { from: Date; to: Date };
 
@@ -28,10 +29,23 @@ export interface GetExternalWeatherParams {
     lon: number;
 }
 
+export interface GetByPeriodParams {
+    cityId: number;
+    from: Date;
+    to: Date;
+}
+
+export interface GetHistoryByPeriodParams {
+    from: Date;
+    to: Date;
+}
+
 export interface CoreDataSource {
     getCities(cityIds: number[]): Promise<DbRecord<City>[]>;
-    // getWeather(params?: GetWeatherParams): Promise<DbRecord<Weather[]>>;
-    // getMostPopularCity(): Promise<City>;
+    getActiveCities(options: QueryOptions<City>): Promise<DbRecord<City>[]>;
     getExternalWeather(city: Pick<DbRecord<City>, 'latitude' | 'longitude' | 'id'>): Promise<Weather[]>;
     saveWeather(weathers: Weather[]): Promise<DbRecord<Weather>[]>;
+    getWeatherByPeriod(params: GetByPeriodParams): Promise<DbRecord<Weather>[]>;
+    incrementSearchHistory(cityId: number): Promise<number>;
+    getHistoryByPeriod(options: GetHistoryByPeriodParams): Promise<DbRecord<SearchHistoryItem>[]>;
 }
