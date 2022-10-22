@@ -1,0 +1,6 @@
+local/
+dist/
+dist-local/
+debug/
+config/
+.eslintrc.js

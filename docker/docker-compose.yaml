@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: ${APP_NAME}-db
+    image: postgres
+    restart: always
+    volumes:
+      - ./01-init.sh:/docker-entrypoint-initdb.d/01-init.sh
+      - ../src/data/migrations:/migrations
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: weather
+    ports:
+      - '5432:5432'
+
+  # app:
+  #   image: node
+  #   container_name: ${APP_NAME}-app
+  #   working_dir: /app
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - ../../:/app
+  #   env_file:
+  #     - .env
+  #   command: >
+  #     sh -c "sleep 10
+  #     && ping google.com -n 6000"
+      
