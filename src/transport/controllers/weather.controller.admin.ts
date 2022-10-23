@@ -1,6 +1,6 @@
-import { SyncWeatherActionPayload } from 'core/interfaces/actions';
 import { Request, Response, Router } from 'express';
-import { validator } from 'transport/middlewares/validation.middleware';
+import { SyncWeatherActionPayload } from '../../core/interfaces/actions';
+import { validator } from '../middlewares/validation.middleware';
 import { logger } from '../../lib/logger';
 import { services } from '../../services';
 
