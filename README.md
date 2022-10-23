@@ -1,5 +1,10 @@
 # The Weather app
 
+## Configs
+Before start, you should: 
+- rename `docker/.env.example` to `docker/.env`  
+- replace env prop `OPEN_WEATHER_API_KEY=<open_weather_api_key>` to valid key from [openweathermap.org](https://openweathermap.org/)
+
 ## Running e2e tests
 ```bash
 npm run test:e2e
