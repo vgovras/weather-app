@@ -1,18 +1,22 @@
-# Weather app
+# The Weather app
 
-## Running service
+## Running e2e tests
 ```bash
-cd ./docker && docker-compose up
+npm run test:e2e
 ```
 
-## Running scrip to import data from api
+## Import some Europe countries from open weather API
 ```bash
-# I recommend doing this in a container
-node ./scripts/import-weathr-data.script.js
+docker exec -it weather-app node /app/scripts/import-weather-data.script.js
 ```
 
-## Swagger
+## Running server for using or manual testing
+```bash
+npm run start:container
+```
+
+## Swagger documentation
 `http://localhost:3000/api-docs`
-After startting the service you can cat access to the swagger documentation
+After starting the service, you can cat access to the swagger documentation
 
 <img width="739" alt="image" src="https://user-images.githubusercontent.com/26094358/197353699-81d281ba-117c-42ca-9fd9-ab4c9c251859.png">

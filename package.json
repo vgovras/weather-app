@@ -9,7 +9,7 @@
     "build": "./node_modules/.bin/rimraf dist && ./node_modules/.bin/tsc -p tsconfig.build.json",
     "start:ts-node": "./node_modules/.bin/ts-node -r tsconfig-paths/register src/index.ts",
     "start:dev": "./node_modules/.bin/tsc-watch -p tsconfig.build.json --onSuccess \"npm run start:ts-node\"",
-    "start:container": "docker-compose -f ./docker/docker-compose up",
+    "start:container": "docker-compose -f ./docker/docker-compose.yaml up",
     "lint": "./node_modules/.bin/eslint .",
     "lint:fix": "./node_modules/.bin/eslint --cache --ext .ts . --fix",
     "test": "echo 'no test specified'",
