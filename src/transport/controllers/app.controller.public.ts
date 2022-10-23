@@ -8,7 +8,7 @@ import {
 import { logger } from '../../lib/logger';
 import { services } from '../../services';
 import { validator } from '../middlewares/validation.middleware';
-import { listSchema } from '../common/schemas';
+import { dateSchema, listSchema } from '../common/schemas';
 
 export const publicAppRouter = Router();
 
@@ -26,10 +26,10 @@ publicAppRouter.get(
 
 publicAppRouter.get(
     '/city/:id/weather',
-    validator<GetCityWeatherCoreActionPayload>({
-        cityId: { type: 'number', positive: true, integer: true },
-        from: { type: 'date' },
-        to: { type: 'date' },
+    validator({
+        id: { type: 'number', positive: true, integer: true, convert: true },
+        from: dateSchema,
+        to: dateSchema,
     }),
     async (req: Request, res: Response) => {
         logger.debug('get_city_weather_req => ', JSON.stringify({ ...req.query, ...req.params }));
@@ -44,10 +44,10 @@ publicAppRouter.get(
 
 publicAppRouter.get(
     '/city/:id/temperature',
-    validator<GetAverageCityTemperatureActionPayload>({
-        cityId: { type: 'number', positive: true, integer: true },
-        from: { type: 'date' },
-        to: { type: 'date' },
+    validator({
+        id: { type: 'number', positive: true, integer: true, convert: true },
+        from: dateSchema,
+        to: dateSchema,
     }),
     async (req: Request, res: Response) => {
         logger.debug('get_city_temperature_req => ', JSON.stringify(req.query));
@@ -63,8 +63,8 @@ publicAppRouter.get(
 publicAppRouter.get(
     '/city/popular',
     validator<GetMostPopularCityActionPayload>({
-        from: { type: 'date' },
-        to: { type: 'date' },
+        from: dateSchema,
+        to: dateSchema,
     }),
     async (req: Request, res: Response) => {
         logger.debug('get_most_popular_city_req => ', JSON.stringify(req.query));

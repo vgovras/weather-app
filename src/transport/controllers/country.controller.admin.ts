@@ -22,7 +22,7 @@ adminCountryRouter.get(
 adminCountryRouter.post(
     '/create',
     validator<Country>({
-        code: { type: 'string', min: 8 },
+        code: { type: 'string', max: 8 },
     }),
     async (req: Request, res: Response) => {
         logger.debug('req_list_countries =>', JSON.stringify(req.body));
