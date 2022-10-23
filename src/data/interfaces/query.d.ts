@@ -1,8 +1,3 @@
-export enum SortOrder {
-    ASC = 'asc',
-    DESC = 'desc',
-}
-
 export interface QueryOptions<T> {
     offset?: number;
     limit?: number;

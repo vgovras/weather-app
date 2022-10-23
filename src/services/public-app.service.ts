@@ -2,13 +2,13 @@ import { Knex } from 'knex';
 import { Pool } from '../data/interfaces/pool';
 import { CoreDataSource } from '../core/interfaces/data-source';
 
-import { GetAwaitableCitiesAction } from '../core/actions/get-awaitable-cities.action';
+import { GetAvailableCitiesAction } from '../core/actions/get-awaitable-cities.action';
 import { GetCityWeatherCoreAction } from '../core/actions/get-city-weather.action';
-import { GetAverageCityTemperatureAction } from '../core/actions/get-average-city-temperature.action';
+import { GetAverageCityTemperatureAction } from '../core/actions/get-available-city-temperature.action';
 import { GetMostPopularCityAction } from '../core/actions/get-most-popular-city.action';
 
 import {
-    GetAwaitableCitiesActionPayload,
+    GetAvailableCitiesActionPayload,
     GetCityWeatherCoreActionPayload,
     GetAverageCityTemperatureActionPayload,
     GetMostPopularCityActionPayload,
@@ -29,8 +29,8 @@ export class PublicAppService {
         private readonly dataSource: CoreDataSource,
     ) { }
 
-    async getAwaitableCities(payload: GetAwaitableCitiesActionPayload) {
-        const action = new GetAwaitableCitiesAction(payload, this.dataSource);
+    async getAvailableCities(payload: GetAvailableCitiesActionPayload) {
+        const action = new GetAvailableCitiesAction(payload, this.dataSource);
 
         return action.execute();
     }

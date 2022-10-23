@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: ${APP_NAME}-db-test
+    image: postgres
+    restart: always
+    volumes:
+      - ./01-init.sh:/docker-entrypoint-initdb.d/01-init.sh
+      - ../../src/data/migrations:/migrations
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: weather
+
+  tests:
+    image: node
+    container_name: ${APP_NAME}-app-test
+    working_dir: /app
+    depends_on:
+      - db
+    volumes:
+      - ../../:/app
+    env_file:
+      - .env
+    command: >
+      sh -c "./node_modules/.bin/jest -w 1 --verbose ./test/e2e"
+

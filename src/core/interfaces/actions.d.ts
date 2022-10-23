@@ -13,7 +13,7 @@ export interface GetAverageCityTemperatureActionPayload {
     to: Date;
 }
 
-export type GetAwaitableCitiesActionPayload = QueryOptions<City>;
+export type GetAvailableCitiesActionPayload = QueryOptions<City>;
 
 export interface SyncWeatherActionPayload {
     cityId: number;

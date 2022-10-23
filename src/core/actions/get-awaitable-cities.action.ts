@@ -1,9 +1,9 @@
 import { CoreDataSource } from 'core/interfaces/data-source';
-import { GetAwaitableCitiesActionPayload } from '../interfaces/actions';
+import { GetAvailableCitiesActionPayload } from '../interfaces/actions';
 
-export class GetAwaitableCitiesAction {
+export class GetAvailableCitiesAction {
     constructor(
-        private readonly payload: GetAwaitableCitiesActionPayload,
+        private readonly payload: GetAvailableCitiesActionPayload,
         private readonly dataSource: CoreDataSource,
     ) { }
 

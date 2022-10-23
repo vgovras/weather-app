@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { ErrorType } from '../errors/user.error';
-import { UserError } from '../errors';
+import { errors } from '../errors';
 import { CoreDataSource } from '../interfaces/data-source';
 import { GetMostPopularCityActionPayload } from '../interfaces/actions';
 import { MAX_PERIOD_DAYS } from '../constants';
@@ -16,7 +15,7 @@ export class GetMostPopularCityAction {
         const toMoment = moment(this.payload.to);
 
         if (toMoment.diff(fromMoment, 'days') > MAX_PERIOD_DAYS) {
-            throw new UserError(ErrorType.BadRequest, 'limit_of_days');
+            throw errors.limitDaysInDiapason(MAX_PERIOD_DAYS);
         }
 
         const history = await this.dataSource.getHistoryByPeriod(this.payload);
@@ -25,14 +24,15 @@ export class GetMostPopularCityAction {
             new Map<number, number>(),
         );
 
-        const [cityId, count] = Array
+        const [data] = Array
             .from(calculatedHistory)
-            .sort((a, b) => b[1] - a[1])[0];
+            .sort((a, b) => b[1] - a[1]);
 
-        if (!cityId) {
+        if (!data) {
             return null;
         }
 
+        const [cityId, count] = data;
         const [city] = await this.dataSource.getCities([cityId]);
 
         return { ...city, count };

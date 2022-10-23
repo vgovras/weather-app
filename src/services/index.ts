@@ -7,9 +7,10 @@ import { PublicAppService } from './public-app.service';
 
 import { db } from '../lib/db';
 import { logger } from '../lib/logger';
+import { openWeather } from '../lib/open-weather';
 
 const models = configureModels(db, logger);
-const dataSource = new DataSource(models);
+const dataSource = new DataSource(models, openWeather);
 
 const city = new CityService(models.city);
 const country = new CountryService(models.country);

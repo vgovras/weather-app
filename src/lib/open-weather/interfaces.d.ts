@@ -79,3 +79,7 @@ export namespace WeaklyWeather {
         lon: number;
     }
 }
+
+export interface OpenWeatherClient {
+    weaklyWeather(data: Omit<WeaklyWeather.Data, 'appid'>): Promise<WeaklyWeather.Result>;
+}

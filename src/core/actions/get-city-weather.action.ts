@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { ErrorType } from '../errors/user.error';
-import { UserError } from '../errors';
+import { } from '../errors/user.error';
+import { errors } from '../errors';
 import { CoreDataSource } from '../interfaces/data-source';
 import { GetCityWeatherCoreActionPayload } from '../interfaces/actions';
 import { MAX_PERIOD_DAYS } from '../constants';
@@ -12,20 +12,25 @@ export class GetCityWeatherCoreAction {
     ) { }
 
     async execute() {
-        const fromMoment = moment(this.payload.from);
-        const toMoment = moment(this.payload.to);
+        const { cityId, from, to } = this.payload;
+        const fromMoment = moment(from);
+        const toMoment = moment(to);
 
         if (toMoment.diff(fromMoment, 'days') > MAX_PERIOD_DAYS) {
-            throw new UserError(ErrorType.BadRequest, 'limit_of_days');
+            throw errors.limitDaysInDiapason(MAX_PERIOD_DAYS);
         }
 
-        const [city] = await this.dataSource.getCities([this.payload.cityId]);
+        const [city] = await this.dataSource.getCities([cityId]);
 
-        if (!city?.isActive) {
-            throw new UserError(ErrorType.BadRequest, 'city_not_awaitable');
+        if (!city) {
+            throw errors.cityIsNotExists(cityId);
         }
 
-        await this.dataSource.incrementSearchHistory(this.payload.cityId);
+        if (!city.isActive) {
+            throw errors.cityIsNotAvailable(cityId);
+        }
+
+        await this.dataSource.incrementSearchHistory(cityId);
         return this.dataSource.getWeatherByPeriod(this.payload);
     }
 }

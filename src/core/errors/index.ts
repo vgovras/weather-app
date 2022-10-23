@@ -1,2 +1,2 @@
 export { errors } from './errors';
-export { UserError, errorCodes } from './user.error';
+export { UserError } from './user.error';

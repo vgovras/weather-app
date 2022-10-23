@@ -1,5 +1,4 @@
-import { ErrorType } from '../errors/user.error';
-import { UserError } from '../errors';
+import { errors } from '../errors';
 import { CoreDataSource } from '../interfaces/data-source';
 import { SyncWeatherActionPayload } from '../interfaces/actions';
 
@@ -13,7 +12,11 @@ export class SyncWeatherAction {
         const [city] = await this.dataSource.getCities([this.payload.cityId]);
 
         if (!city) {
-            throw new UserError(ErrorType.NotFound, 'city_not_created');
+            throw errors.cityIsNotExists(this.payload.cityId);
+        }
+
+        if (!city.isActive) {
+            throw errors.cityIsNotAvailable(this.payload.cityId);
         }
 
         const weathers = await this.dataSource.getExternalWeather(city);

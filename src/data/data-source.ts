@@ -2,12 +2,14 @@ import moment from 'moment';
 import { CoreDataSource, GetByPeriodParams, GetHistoryByPeriodParams } from '../core/interfaces/data-source';
 import { DbRecord, City, Weather, RecordId, SearchHistoryItem } from './interfaces/entities';
 import { Models } from './models';
-import { openWeather } from '../lib/open-weather';
 import { QueryOptions } from './interfaces/query';
+import { OpenWeatherClient } from '../lib/open-weather/interfaces';
+import { openWeather as openWeatherClient } from '../lib/open-weather';
 
 export class DataSource implements CoreDataSource {
     constructor(
         private readonly models: Models,
+        private readonly openWeather: OpenWeatherClient = openWeatherClient,
     ) { }
 
     async getHistoryByPeriod(options: GetHistoryByPeriodParams): Promise<DbRecord<SearchHistoryItem>[]> {
@@ -43,11 +45,9 @@ export class DataSource implements CoreDataSource {
     }
 
     async getExternalWeather(city: Pick<DbRecord<City>, 'latitude' | 'longitude' | 'id'>): Promise<Weather[]> {
-        const cityWeathers = await openWeather
-            .weaklyWeather({ lat: city.latitude, lon: city.latitude })
-            .then(response => response.data.list);
+        const cityWeathers = await this.openWeather.weaklyWeather({ lat: city.latitude, lon: city.latitude });
 
-        return cityWeathers.map(cityWeather => ({
+        return cityWeathers.list.map(cityWeather => ({
             cityId: city.id,
             date: new Date(cityWeather.dt * 1000),
             temp: cityWeather.main.temp,
